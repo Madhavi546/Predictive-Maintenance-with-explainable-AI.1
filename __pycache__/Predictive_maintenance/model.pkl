@@ -1,0 +1,25 @@
+import pandas as pd
+import xgboost as xgb
+import joblib
+from sklearn.model_selection import train_test_split
+
+# Load dataset
+df = pd.read_csv(r"C:\Users\THINKPAD\Desktop\Predictive_maintenance\ai4i2020.csv")
+
+# Features and target
+X = df.drop("Machine failure", axis=1)
+y = df["Machine failure"]
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = xgb.XGBClassifier()
+model.fit(X_train, y_train)
+
+# Save model
+joblib.dump(model, "model.pkl")
+
+print("model.pkl created successfully")
